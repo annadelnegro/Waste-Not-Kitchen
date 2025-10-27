@@ -1,0 +1,1 @@
+<!-- Front controller. Parses the URL and routes to the right web module (e.g., modules/Recipes) -->

@@ -1,0 +1,1 @@
+<!-- View template for listing recipes (HTML output). -->

@@ -1,0 +1,1 @@
+<!-- Utility: database access helper (later you’ll connect to MAMP’s MySQL here). -->

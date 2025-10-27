@@ -1,0 +1,1 @@
+# Ignore .env, logs, tmp files, vendor, etc. (keeps secrets/local artifacts out of git)

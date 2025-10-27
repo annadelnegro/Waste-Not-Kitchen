@@ -1,0 +1,1 @@
+<!-- Non-secret settings (e.g., DB name, host). Keep passwords out of this file -->
