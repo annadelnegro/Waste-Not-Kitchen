@@ -12,7 +12,7 @@ try {
     $pdo->exec("USE `{$dbName}`");
 
     $total = (int) $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
-    $stmt = $pdo->query('SELECT id, username, email, created_at FROM users ORDER BY id DESC LIMIT 50');
+    $stmt = $pdo->query('SELECT id, username, role, created_at FROM users ORDER BY id DESC LIMIT 50');
     $rows = $stmt->fetchAll();
 } catch (\Throwable $e) {
     http_response_code(500);
@@ -58,14 +58,14 @@ try {
 
     <?php if (empty($rows)): ?>
       <p>No users found. You can add one in phpMyAdmin or by running a quick INSERT:</p>
-      <pre>INSERT INTO users (username, email, password) VALUES ('demo','demo@example.com', '$2y$10$exampleexampleexampleexampleexaP4mEitjJq3bXJUo0vYjRkq');</pre>
+      <pre>INSERT INTO users (username, role, password) VALUES ('demo','customer', '$2y$10$exampleexampleexampleexampleexaP4mEitjJq3bXJUo0vYjRkq');</pre>
     <?php else: ?>
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Username</th>
-            <th>Email</th>
+            <th>Role</th>
             <th>Created</th>
           </tr>
         </thead>
@@ -74,7 +74,7 @@ try {
           <tr>
             <td><?php echo (int)$r['id']; ?></td>
             <td><?php echo htmlspecialchars($r['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-            <td><?php echo htmlspecialchars($r['email'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+            <td><?php echo htmlspecialchars($r['role'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
             <td><?php echo htmlspecialchars($r['created_at'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
           </tr>
         <?php endforeach; ?>
