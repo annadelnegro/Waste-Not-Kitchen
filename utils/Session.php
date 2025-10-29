@@ -1,0 +1,1 @@
+<!-- Start/read/write sessions safely (e.g., wrapper for $_SESSION). -->

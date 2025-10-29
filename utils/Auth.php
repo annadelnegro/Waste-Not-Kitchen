@@ -1,0 +1,1 @@
+<!-- Login/logout helpers, password hashing/verify, current user, role checks. -->
