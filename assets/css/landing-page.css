@@ -1,0 +1,176 @@
+@font-face {
+    font-family: 'Simply Olive DEMO';
+    src: url('../fonts/Simply\ Olive\ DEMO.ttf') format('opentype');
+}
+
+body {
+    font-family: 'Simply Olive DEMO', Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: #05339C;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 5%;
+}
+
+.left {
+    max-width: 45%;
+}
+
+.left h1 {
+    font-size: 5rem;
+    color: #E5C95F;
+    line-height: 1.1;
+    margin-bottom: 0.5em;
+}
+
+.left p {
+    color: #E5C95F;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.right {
+    max-width: 50%;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
+}
+
+.purpose-section {
+    text-align: right;
+}
+
+.purpose-section h2 {
+    font-size: 2rem;
+    color: #E5C95F;
+    margin-bottom: 0.5em;
+    letter-spacing: 1px;
+}
+
+.purpose-section p {
+    color: #ffffff;
+    font-size: 1.8rem;
+    line-height: 1.6;
+    max-width: 550px;
+    margin-left: auto;
+}
+
+.cta-section {
+    text-align: right;
+    margin-top: 3em;
+}
+
+.btn {
+    background-color: #41A67E;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    color: #05339C;
+    font-size: 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    transform: translateY(0) scale(1);
+    will-change: transform;
+}
+
+.btn:hover {
+    background-color: #3b9470;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(229, 201, 95, 0.6), 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.login {
+    display: block;
+    margin-top: 1em;
+    font-size: 1.8rem;
+    color: #d8e0ff;
+}
+
+.login a {
+    color: white;
+    text-decoration: underline;
+    display: inline-block; /* needed so transform works on links */
+    transition: color 0.2s ease, transform 0.15s ease, text-shadow 0.15s ease;
+    transform: translateY(0) scale(1);
+}
+
+.login a:hover {
+    transform: translateY(-2px) scale(1.03);
+    text-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.login a:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+.login a:focus-visible {
+    outline: none;
+    text-shadow: 0 0 0 rgba(0,0,0,0), 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 3px rgba(229, 201, 95, 0.6);
+    border-radius: 6px;
+}
+
+img {
+    width: 250px;
+    margin-top: 20px;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .login a {
+        transition: none;
+        transform: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+}
+
+/* Responsive Layout */
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        padding: 30px;
+    }
+
+    .left,
+    .right {
+        max-width: 100%;
+    }
+
+    .left h1 {
+        font-size: 3rem;
+    }
+
+    .right {
+        align-items: center;
+    }
+
+    .purpose-section p {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .cta-section {
+        text-align: center;
+    }
+}
