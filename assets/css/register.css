@@ -1,0 +1,169 @@
+/* @font-face {
+    font-family: 'Simply Olive DEMO';
+    src: url('../fonts/Simply Olive DEMO.ttf') format('opentype');
+} */
+
+/* Page layout */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #05339C;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.page-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---------- LEFT PANEL (form) ---------- */
+.register-form-container {
+    background-color: #E5C95F;
+    width: 65%;
+    padding: 30px 40px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.register-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-title {
+    text-align: center;
+    color: #05339C;
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    position: relative;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #05339C;
+    margin-bottom: 5px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background-color: #41A67E;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 30px auto;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #378e6b;
+}
+
+/* Error text under input fields */
+.error-message {
+    color: #E44650;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    visibility: hidden;
+}
+
+/* Payment section hidden by default */
+.hidden {
+    display: none;
+}
+
+/* ---------- RIGHT PANEL (info) ---------- */
+.info-panel {
+    background-color: #1055C9;
+    color: #fff;
+    width: 35%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.info-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.role-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.role-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.role-icon {
+    width: 60px;
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-section h3 {
+    margin-bottom: 8px;
+    color: #E5C95F;
+    font-size: 1.2rem;
+}
+
+.section-heading {
+    color: #05339C;
+}
+
+/* (Toast styles removed) */
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1000px) {
+
+    body,
+    .page-wrapper {
+        flex-direction: column;
+        overflow: auto;
+        height: auto;
+    }
+
+    .register-form-container,
+    .info-panel {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+
+    .info-panel {
+        margin-top: 30px;
+    }
+}
