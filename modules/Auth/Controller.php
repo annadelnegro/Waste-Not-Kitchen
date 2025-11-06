@@ -113,7 +113,35 @@ switch ($action) {
         }
         break;
 
-    default:
+        case 'login':
+        try {
+            $username = trim($_POST['username'] ?? '');
+            $password = $_POST['password'] ?? '';
+
+            if (!$username || !$password) {
+                echo json_encode(["status" => "error", "message" => "Missing required fields"]);
+                exit;
+            }
+
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                echo json_encode(["status" => "success"]);
+            } else {
+                echo json_encode([
+                    "status" => "error",
+                    "field" => "password",
+                    "message" => "Incorrect Username or Password"
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+        break;
+    
+        default:
         echo json_encode(["status" => "error", "message" => "Invalid action"]);
         break;
 }
