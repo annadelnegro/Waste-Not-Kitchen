@@ -33,7 +33,7 @@
 
         <p class="links">
           Don’t Have an Account? <a href="register.php">Sign Up</a><br />
-          <a href="forgot_pwd.php">Forgot Username/Password</a>
+          <a href="forgot_pwd.php">Forgot Password</a>
         </p>
       </form>
     </div>
