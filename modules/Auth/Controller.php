@@ -49,7 +49,6 @@ switch ($action) {
 
             // --- Hash password & security answer only ---
             $hashedPassword = hashData($password);
-            $hashedSecurityQuestion = hashData($security_question);
             $hashedSecurityAnswer = hashData($security_answer);
 
             // Basic server-side payment field sanitation (only if role requires and fields provided)
@@ -79,7 +78,7 @@ switch ($action) {
                 INSERT INTO users (username, password, role, security_question, security_answer)
                 VALUES (?, ?, ?, ?, ?)
             ");
-            $stmt->execute([$username, $hashedPassword, $role, $hashedSecurityQuestion, $hashedSecurityAnswer]);
+            $stmt->execute([$username, $hashedPassword, $role, $security_question, $hashedSecurityAnswer]);
             $user_id = $pdo->lastInsertId();
 
             // --- Insert into profiles table ---
@@ -136,6 +135,69 @@ switch ($action) {
                     "message" => "Incorrect Username or Password"
                 ]);
             }
+        } catch (Exception $e) {
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+        break;
+
+        case 'forgot_pwd':
+        try {
+            $username = trim($_POST['username'] ?? '');
+            $security_answer = trim($_POST['security_answer'] ?? '');
+            $new_password = trim($_POST['new_password'] ?? '');
+            $confirm_password = trim($_POST['confirm_password'] ?? '');
+
+            // Step 1: Check if username exists
+            if ($username && !$security_answer && !$new_password) {
+                $stmt = $pdo->prepare("SELECT security_question FROM users WHERE username = ?");
+                $stmt->execute([$username]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if (!$user) {
+                    echo json_encode(["status" => "error", "message" => "Oops! That username does not exist"]);
+                    exit;
+                }
+
+                echo json_encode(["status" => "success", "security_question" => $user['security_question']]);
+                exit;
+            }
+
+            // Step 2: Verify answer
+            if ($username && $security_answer && !$new_password) {
+                $stmt = $pdo->prepare("SELECT security_answer FROM users WHERE username = ?");
+                $stmt->execute([$username]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if (!$user || !password_verify($security_answer, $user['security_answer'])) {
+                    echo json_encode(["status" => "error", "message" => "Incorrect answer. Try again"]);
+                    exit;
+                }
+
+                echo json_encode(["status" => "success"]);
+                exit;
+            }
+
+            // Step 3: Reset password
+            if ($username && $new_password && $confirm_password) {
+                if ($new_password !== $confirm_password) {
+                    echo json_encode(["status" => "error", "message" => "Passwords do not match"]);
+                    exit;
+                }
+
+                // Validate password
+                if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/', $new_password)) {
+                    echo json_encode(["status" => "error", "message" => "Password does not meet requirements"]);
+                    exit;
+                }
+
+                $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
+                $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE username = ?");
+                $stmt->execute([$hashedPassword, $username]);
+
+                echo json_encode(["status" => "success"]);
+                exit;
+            }
+
         } catch (Exception $e) {
             echo json_encode(["status" => "error", "message" => $e->getMessage()]);
         }

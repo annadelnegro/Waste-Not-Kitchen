@@ -1,7 +1,7 @@
-/* @font-face {
+@font-face {
     font-family: 'Simply Olive DEMO';
     src: url('../fonts/Simply Olive DEMO.ttf') format('opentype');
-} */
+}
 
 /* Page layout */
 body {
@@ -37,8 +37,9 @@ body {
 .form-title {
     text-align: center;
     color: #05339C;
-    font-size: 2rem;
+    font-size: 2.8rem;
     margin-bottom: 25px;
+    font-family: 'Simply Olive DEMO', sans-serif !important;
 }
 
 .form-group {
@@ -68,13 +69,14 @@ select {
     background-color: #41A67E;
     border: none;
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     padding: 12px 25px;
     border-radius: 10px;
     cursor: pointer;
     margin: 30px auto;
     display: block;
     transition: background-color 0.3s ease;
+    font-family: 'Simply Olive DEMO', sans-serif;
 }
 
 .submit-btn:hover {
@@ -109,8 +111,9 @@ select {
 }
 
 .info-title {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin-bottom: 20px;
+    font-family: 'Simply Olive DEMO', sans-serif !important;
 }
 
 .role-list {
