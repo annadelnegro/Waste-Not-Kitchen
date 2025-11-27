@@ -6,43 +6,107 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Customer-Dashboard</title>
+		<title>Donor-Dashboard</title>
 		
 		<!-- External CSS -->
-		<link rel="stylesheet" href="../assets/css/customer-dashboard.css">
+		<link rel="stylesheet" href="../../assets/css/donor-dashboard.css">
 	</head>
 	
 	<body>
-		<div class="welcome">
-			<!-- Add name to welcome -->
-			<h1> Welcome. </h1>
+		<div class="page">
+			<a href="donor-cart.php" class="cart-button">Cart</a>
+
+			<a href="../.." class="back-button">Back</a>
+
+			<h1 class="dashboard-title">Donor Dashboard</h1>
+
+			<h2 class="plates-avail">Plates Available</h2>
+
+			<section class="card-grid">
+				<!-- Card 1 -->
+				<article class="plate-card">
+					<div class="plate-title">Dish A</div>
+					<div class="description-box">Description</div>
+					<div class="meta-row">
+					<div class="pill">$20</div>
+					<div class="pill">2 available</div>
+					</div>
+					<div class="action-row">
+					<input class="qty-input" type="number" min="1" value="1">
+					<button class="add-btn">Reserve</button>
+					</div>
+				</article>
+
+				<!-- Card 2 -->
+				<article class="plate-card">
+					<div class="plate-title">Dish B</div>
+					<div class="description-box">Description</div>
+					<div class="meta-row">
+					<div class="pill">$20</div>
+					<div class="pill">2 available</div>
+					</div>
+					<div class="action-row">
+					<input class="qty-input" type="number" min="1" value="1">
+					<button class="add-btn">Reserve</button>
+					</div>
+				</article>
+
+				<!-- Card 3 -->
+				<article class="plate-card">
+					<div class="plate-title">Dish C</div>
+					<div class="description-box">Description</div>
+					<div class="meta-row">
+					<div class="pill">$20</div>
+					<div class="pill">2 available</div>
+					</div>
+					<div class="action-row">
+					<input class="qty-input" type="number" min="1" value="1">
+					<button class="add-btn">Reserve</button>
+					</div>
+				</article>
+
+				<!-- Card 4 -->
+				<article class="plate-card">
+					<div class="plate-title">Dish D</div>
+					<div class="description-box">Description</div>
+					<div class="meta-row">
+					<div class="pill">$20</div>
+					<div class="pill">3 available</div>
+					</div>
+					<div class="action-row">
+					<input class="qty-input" type="number" min="1" value="1">
+					<button class="add-btn">Reserve</button>
+					</div>
+				</article>
+
+				<!-- Card 5 -->
+				<article class="plate-card">
+					<div class="plate-title">Dish E</div>
+					<div class="description-box">Description</div>
+					<div class="meta-row">
+					<div class="pill">$20</div>
+					<div class="pill">1 available</div>
+					</div>
+					<div class="action-row">
+					<input class="qty-input" type="number" min="1" value="1">
+					<button class="add-btn">Reserve</button>
+					</div>
+				</article>
+
+				<!-- Card 6 -->
+				<article class="plate-card">
+					<div class="plate-title">Dish F</div>
+					<div class="description-box">Description</div>
+					<div class="meta-row">
+					<div class="pill">$20</div>
+					<div class="pill">2 available</div>
+					</div>
+					<div class="action-row">
+					<input class="qty-input" type="number" min="1" value="1">
+					<button class="add-btn">Reserve</button>
+					</div>
+				</article>
+			</section>
 		</div>
-		
-		<div class="plates">
-			<!-- Create a scroll search for available plates -->
-			<h2> Available Plates </h2>
-		</div>
-		
-		<!-- Concept -->
-		<div class="plates-scroll">
-			<ul>
-				<li>Dish A</li>
-				<li>Dish B</li>
-				<li>Dish C</li>
-				<li>Dish D</li>
-				<li>Dish E</li>
-				<li>Dish F</li>
-				<li>Dish G</li>
-				<li>Dish H</li>
-				<li>Dish I</li>
-				<li>Dish J</li>
-				<li>Dish K</li>
-				<li>Dish L</li>
-				<li>Dish M</li>
-				<li>Dish N</li>
-			</ul>
-		</div>
-		
-		<a href="donor-cart.php" class="cart-button">Cart</a>
 	</body>
 </html>
