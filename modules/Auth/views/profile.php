@@ -9,6 +9,12 @@ if (empty($_SESSION['user_id'])) {
     exit;
 }
 
+// If this user is an admin, redirect them to the admin dashboard instead of the profile
+if (!empty($_SESSION['role']) && strtolower($_SESSION['role']) === 'admin') {
+  header('Location: /Waste-Not-Kitchen/admin-dashboard.php');
+  exit;
+}
+
 $full_name = $_SESSION['full_name'] ?? '';
 $username = $_SESSION['username'] ?? '';
 $role = $_SESSION['role'] ?? '';

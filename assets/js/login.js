@@ -46,7 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
 
             if (result.status === "success") {
-                window.location.href = "profile.php";
+                // If the server indicates this user is an admin, send them to admin dashboard
+                const role = (result.role || '').toString().toLowerCase();
+                if (role === 'admin') {
+                    // Use absolute path so redirect works from any page
+                    window.location.href = '/Waste-Not-Kitchen/admin-dashboard.php';
+                } else {
+                    window.location.href = 'profile.php';
+                }
             } else if (result.field === "username" || result.field === "password") {
                 showError(password, "Incorrect Username or Password");
             } else {

@@ -1,0 +1,60 @@
+/* Styles for Admin Search Member (moved from modules/Admin/search_member.php) */
+body {
+    font-family: "Arial", sans-serif;
+    padding: 20px;
+    background-color: #05339c; /* Deep Blue Background */
+    color: white;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styling */
+h2 {
+    color: white;
+    border-bottom: 2px solid #e6c960; /* Gold Underline */
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+/* Back Button */
+.back-btn {
+    text-decoration: none;
+    color: #e6c960; /* Gold Text */
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.back-btn:hover { color: white; text-decoration: underline; }
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #042a80; /* Slightly darker blue for table background */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+th {
+    background-color: #e6c960; /* Gold Header */
+    color: black; /* Black text on Gold */
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+}
+td {
+    border: 1px solid #4a76d4; /* Light Blue Border */
+    padding: 12px;
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: #063bb5; /* Striped Effect */
+}
+tr:hover {
+    background-color: #0844d1; /* Hover Effect */
+}
+
+.error { color: #ff6b6b; background: #521414; padding: 10px; border: 1px solid #ff6b6b; margin-top: 10px; }

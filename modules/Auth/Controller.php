@@ -812,7 +812,8 @@ switch ($action) {
                     // ignore profile fetch errors; still allow login
                 }
 
-                send_json(["status" => "success"]);
+                // Return role so client can redirect appropriately
+                send_json(["status" => "success", "role" => $user['role'] ?? null]);
             } else {
                 send_json([
                     "status" => "error",
