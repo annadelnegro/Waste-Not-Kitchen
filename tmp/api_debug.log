@@ -1,0 +1,7 @@
+[2025-11-30T03:35:37+00:00] {"update_profile_called":{"session_user_id":51,"session_username":"annas_rest","body":{"field":"full_name","value":"Anna's Final Restaurant Test"}}}
+[2025-11-30T03:36:13+00:00] {"update_profile_called":{"session_user_id":51,"session_username":"annas_rest","body":{"field":"full_name","value":"Anna's Final Restaurant"}}}
+[2025-11-30T04:04:57+00:00] {"update_profile_called":{"session_user_id":51,"session_username":"annas_rest","body":{"field":"address","value":"12 Test Blvd St."}}}
+[2025-11-30T04:05:19+00:00] {"update_profile_called":{"session_user_id":51,"session_username":"annas_rest","body":{"field":"phone","value":"111-222-1111"}}}
+[2025-11-30T05:50:55+00:00] {"donation_pickup":{"donation_id":23,"plate_id":24,"donation_qty":2,"remaining":18}}
+[2025-11-30T05:54:09+00:00] {"return_donation":{"donation_id":16,"plate_id":21,"added_back":1,"remaining":13}}
+[2025-11-30T05:57:00+00:00] {"donation_pickup":{"donation_id":21,"plate_id":11,"donation_qty":1,"remaining":3}}

@@ -29,14 +29,41 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const formData = new FormData(form);
+        // Build FormData only with fields relevant to the current step.
+        const formData = new FormData();
+        if (currentStep === 1) {
+            formData.append('username', form.username.value.trim());
+        } else if (currentStep === 2) {
+            formData.append('username', form.username.value.trim());
+            formData.append('security_answer', form.security_answer.value.trim());
+        } else if (currentStep === 3) {
+            formData.append('username', currentUsername || form.username.value.trim());
+            formData.append('new_password', form.new_password.value);
+            formData.append('confirm_password', form.confirm_password.value);
+        }
 
         try {
             const response = await fetch(form.action, {
                 method: "POST",
                 body: formData,
             });
-            const result = await response.json();
+
+            // Safely parse JSON and fall back to logging raw text on error
+            let result;
+            const text = await response.text();
+            try {
+                result = text ? JSON.parse(text) : null;
+            } catch (parseErr) {
+                console.error("Network error: JSON parse failed", parseErr, "HTTP status:", response.status, "response text:", text);
+                showError(form.username, "Server returned invalid JSON. See console for details.");
+                return; // stop further processing so developer can inspect the raw response
+            }
+
+            if (!result) {
+                console.error("Network error: empty JSON result", "HTTP status:", response.status, "response text:", text);
+                showError(form.username, "Empty server response. See console for details.");
+                return;
+            }
 
             if (result.status === "error") {
                 // Show appropriate inline error

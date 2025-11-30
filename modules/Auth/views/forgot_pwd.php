@@ -23,7 +23,7 @@
       <h2>Forgot Password Portal</h2>
 
       <!-- Step 1: Enter Username -->
-      <form id="forgotForm" method="POST" action="../Controller.php?action=forgot_pwd">
+      <form id="forgotForm" method="POST" action="../forgot_pwd_api.php">
         <div id="step1">
           <p class="step-text">Enter Username to Continue</p>
           <input type="text" id="username" name="username" placeholder="Username" required />

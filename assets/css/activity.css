@@ -1,0 +1,182 @@
+/* Activity page styles - keep simple and consistent with other pages */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #143b93;
+    /* deep blue like screenshot */
+    color: #111;
+    margin: 0;
+    padding: 32px;
+}
+
+.page-title {
+    text-align: center;
+    color: #f5c84c;
+    font-size: 45px;
+    margin: 8px 0 20px 0;
+    font-family: 'Simply Olive DEMO', sans-serif;
+}
+
+.top-actions {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.btn {
+    display: inline-block;
+    background: #3a8b4a;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin: 0 6px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Restore subtle drop-shadow for primary buttons and remove heavy borders */
+.btn, .btn.back, .action-btn, .action-btn.return-btn {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+    border: none;
+}
+
+/* Keep tabs mostly flat; active tab gets an inset shadow to indicate selection */
+.tab-btn { box-shadow: none; }
+.tab-btn.active { box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.08); }
+
+/* Keyboard focus: subtle outline to remain accessible without heavy borders */
+button:focus, .btn:focus, .tab-btn:focus, .action-btn:focus {
+    outline: 2px solid rgba(43,107,209,0.12);
+    outline-offset: 2px;
+}
+
+.btn.back {
+    background: #e4bf4d;
+    color: #123;
+}
+
+.activity-wrap {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 18px;
+    width: 420px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+    border: 4px solid transparent;
+}
+
+.orders-box {
+    border-color: #fff;
+}
+
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    justify-content: flex-start;
+}
+
+.box-header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #123;
+    margin-bottom: 8px;
+}
+
+.tab-btn {
+    background: #f0ca5f;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: none; /* remove darker inset/outline */
+}
+
+.tab-btn.active {
+    box-shadow: none;
+}
+
+.list {
+    min-height: 240px;
+}
+
+.item {
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-title {
+    font-weight: 600;
+}
+
+.small-muted {
+    text-align: center;
+    color: #666;
+    padding: 28px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.item-body {
+    margin-top: 8px;
+    color: #333;
+}
+
+.action-row {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: #2b6bd1;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Modal-specific smaller buttons (use these for Save/Cancel in modals) */
+.modal-btn {
+    box-shadow: none;
+    border: none;
+    background: #f0ca5f;
+    color: #123;
+    padding: 8px 16px;
+    border-radius: 18px;
+    font-size: 14px; /* smaller font for modal actions */
+}
+.modal-btn.cancel {
+    font-size: 13px;
+}
+
+.action-btn.return-btn {
+    background: #d14b4b;
+}
+
+@media (max-width: 900px) {
+    .activity-wrap {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .box {
+        width: 92%;
+    }
+}
+

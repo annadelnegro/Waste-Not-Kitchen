@@ -1,0 +1,134 @@
+/* Modal for Add Plate (restaurant) */
+.modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+/* Ensure edit modal appears above view modal when both present */
+#edit-plate-modal {
+    z-index: 3000;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 8px;
+    width: 640px;
+    max-width: 95%;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.modal-content h2 {
+    margin: 0 0 12px 0;
+    color: #05339C;
+    font-family: 'Simply Olive DEMO', sans-serif;
+    font-size: 30px;
+}
+
+/* View Plates specific styles */
+.plates-list {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.plate-item {
+    display: grid;
+    grid-template-columns: 1fr 120px 120px;
+    gap: 12px;
+    align-items: start;
+    padding: 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+.plate-title {
+    font-weight: 700;
+    color: #05339C;
+    margin-bottom: 6px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.plate-desc {
+    max-height: 72px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.3;
+    padding: 8px;
+    background: #f8fafb;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.plate-meta {
+    text-align: right;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* smaller screens */
+@media (max-width:700px) {
+    .plate-item {
+        grid-template-columns: 1fr 100px;
+        grid-template-rows: auto auto;
+    }
+    .plate-meta { text-align: left; }
+}
+
+.modal-body label {
+    display: block;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="number"],
+.modal-body textarea,
+.modal-body input[type="datetime-local"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.modal-body textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.two-cols {
+    display: flex;
+    gap: 12px;
+}
+
+.two-cols>div {
+    flex: 1;
+}
+
+.modal-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.modal .small-muted {
+    margin-top: 8px;
+}
+
+@media (max-width:600px) {
+    .two-cols {
+        flex-direction: column;
+    }
+}

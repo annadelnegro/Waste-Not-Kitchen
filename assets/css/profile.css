@@ -1,0 +1,221 @@
+@font-face {
+    font-family: 'Simply Olive DEMO';
+    src: url('../fonts/Simply Olive DEMO.ttf') format('opentype');
+}
+
+:root {
+    --bg: #05339C;
+    --panel: #FFFFFF;
+    --accent: #E5C95F;
+    --cta: #41A67E;
+    --muted: #EAF6F4;
+    --text-dark: #05339C;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg);
+    font-family: 'Simply Olive DEMO', sans-serif;
+    color: var(--text-dark);
+}
+
+.profile-header {
+    text-align: center;
+    padding: 48px 0 18px;
+    color: var(--accent);
+    font-size: 55px;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.btn {
+    background: var(--accent);
+    color: var(--text-dark);
+    padding: 10px 22px;
+    border-radius: 18px;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    cursor: pointer;
+}
+.btn {
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.10);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.08);
+}
+
+
+.profile-card-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 10px 40px 48px;
+}
+
+.profile-card {
+    background: var(--panel);
+    border-radius: 12px;
+    width: 900px;
+    display: flex;
+    gap: 28px;
+    padding: 34px;
+    align-items: flex-start;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.profile-photo {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+}
+
+.profile-left {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-title {
+    font-size: 28px;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.profile-details {
+    flex: 1;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 12px 0;
+}
+
+.detail-label {
+    width: 110px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 18px;
+    line-height: 1.2;
+    font-family: 'Poppins', sans-serif;
+}
+
+.detail-value {
+    background: #E8F7F2;
+    padding: 10px 18px;
+    border-radius: 18px;
+    min-width: 0;
+    flex: 1 1 auto;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 14px;
+    line-height: 1.2;
+    font-family: 'Poppins', sans-serif;
+}
+
+.detail-value::-webkit-scrollbar {
+    height: 8px;
+}
+
+.detail-value::-webkit-scrollbar-thumb {
+    background: rgba(5, 51, 156, 0.2);
+    border-radius: 6px;
+}
+
+.signout-wrap {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.signout-btn {
+    background: #E44650;
+    color: white;
+    padding: 12px 42px;
+    border-radius: 18px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+.actions-panel {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+}
+
+.actions-header {
+    background: var(--accent);
+    color: var(--text-dark);
+    border-radius: 22px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.action-link {
+    background: #fff;
+    border-radius: 22px;
+    padding: 10px;
+    text-align: left;
+    text-decoration: none;
+    color: var(--text-dark);
+    box-shadow: 0 8px 9px rgba(0, 0, 0, 0.06);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+
+button.action-link:hover {
+    transform: translateY(-2px);
+    /* moves the button up slightly */
+    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.10);
+}
+
+button.action-link:active {
+    transform: translateY(0);
+    /* resets on click */
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1000px) {
+    .profile-card {
+        width: 92%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-left {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .detail-label {
+        width: 140px;
+    }
+}

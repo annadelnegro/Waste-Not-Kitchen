@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS donations (
   needy_id INT,
   plate_id INT NOT NULL,
   quantity INT NOT NULL,
+  status ENUM('available','reserved','claimed') NOT NULL DEFAULT 'available',
   donated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (donor_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (needy_id) REFERENCES users(id) ON DELETE SET NULL,
