@@ -1,19 +1,17 @@
 <?php
-// modules/Admin/reports.php
 
-// 1. Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// 2. Connect to the database
+// Connect to the database
 $db_path = __DIR__ . '/../../config/config.php';
 if (!file_exists($db_path)) {
     die("Error: Could not find database configuration file at: " . $db_path);
 }
 require_once $db_path;
 
-// 3. THEME STYLING (Deep Blue & Gold)
+// Styling
 echo '<style>
     body { 
         font-family: "Arial", sans-serif; 
@@ -76,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         switch ($type) {
             
-            // --- REPORT 1: ANNUAL RESTAURANT ACTIVITY ---
+            // Annual Report
             case 'restaurant_annual':
                 echo "<h2>Annual Restaurant Activity Report</h2>";
                 
@@ -103,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } else { echo "<p>No restaurant activity found for the current year.</p>"; }
                 break;
 
-            // --- REPORT 2: CUSTOMER PURCHASE HISTORY ---
+            // Purchase history
             case 'customer_purchase':
                 if (!$username) { echo "<p>Error: Username is required.</p>"; break; }
                 echo "<h2>Purchase History for: " . htmlspecialchars($username) . "</h2>";
@@ -134,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } else { echo "<p>No purchases found for user <strong>$username</strong> this year.</p>"; }
                 break;
 
-            // --- REPORT 3: FREE PLATES RECEIVED (NEEDY) ---
+            // Free plates recived
             case 'needy_plates':
                 if (!$username) { echo "<p>Error: Username is required.</p>"; break; }
                 echo "<h2>Free Plates Received by: " . htmlspecialchars($username) . "</h2>";
@@ -163,12 +161,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } else { echo "<p>No free plates found for user <strong>$username</strong> this year.</p>"; }
                 break;
 
-            // --- REPORT 4: YEAR-END TAX DECLARATION (DONOR) ---
+            // Year end tax deduction report
             case 'donor_tax':
                 echo "<h2>Year-End Tax Report (Donors)</h2>";
                 echo "<p>The following users have made donations this year eligible for tax reporting.</p>";
 
-                // Includes Strict Mode Fix
                 $sql = "SELECT u.username, prof.full_name, SUM(p.price * d.quantity) as total_donation_value
                         FROM users u
                         JOIN donations d ON u.id = d.donor_id
