@@ -1,0 +1,201 @@
+<?php
+// modules/Admin/reports.php
+
+// 1. Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// 2. Connect to the database
+$db_path = __DIR__ . '/../../config/config.php';
+if (!file_exists($db_path)) {
+    die("Error: Could not find database configuration file at: " . $db_path);
+}
+require_once $db_path;
+
+// 3. THEME STYLING (Deep Blue & Gold)
+echo '<style>
+    body { 
+        font-family: "Arial", sans-serif; 
+        padding: 20px; 
+        background-color: #05339c; 
+        color: white;
+    }
+    .container { 
+        max-width: 900px; 
+        margin: 0 auto; 
+        padding: 20px; 
+    }
+    
+    h2 { 
+        color: white; 
+        border-bottom: 2px solid #e6c960; 
+        padding-bottom: 10px;
+        margin-top: 20px;
+    }
+
+    .back-btn { 
+        text-decoration: none; 
+        color: #e6c960; 
+        font-weight: bold; 
+        font-size: 18px; 
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    .back-btn:hover { color: white; text-decoration: underline; }
+
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 20px; 
+        background-color: #042a80; 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    th { 
+        background-color: #e6c960; 
+        color: black; 
+        padding: 12px; 
+        text-align: left; 
+    }
+    td { 
+        border: 1px solid #4a76d4; 
+        padding: 12px; 
+        color: white; 
+    }
+    tr:nth-child(even) { background-color: #063bb5; }
+    tr:hover { background-color: #0844d1; }
+</style>';
+
+echo '<div class="container">';
+echo '<a href="../../admin-dashboard.php" class="back-btn">&larr; Back to Dashboard</a>';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $type = $_POST['report_type'];
+    $username = isset($_POST['username']) ? trim($_POST['username']) : null;
+
+    try {
+        switch ($type) {
+            
+            // --- REPORT 1: ANNUAL RESTAURANT ACTIVITY ---
+            case 'restaurant_annual':
+                echo "<h2>Annual Restaurant Activity Report</h2>";
+                
+                $sql = "SELECT r.restaurant_name, COUNT(o.id) as total_orders, SUM(p.price * o.quantity) as total_revenue
+                        FROM restaurants r
+                        JOIN plates p ON r.id = p.restaurant_id
+                        JOIN orders o ON p.id = o.plate_id
+                        WHERE YEAR(o.created_at) = YEAR(CURDATE())
+                        GROUP BY r.id";
+                
+                $stmt = $pdo->query($sql);
+                $results = $stmt->fetchAll();
+                
+                if ($results) {
+                    echo "<table><tr><th>Restaurant Name</th><th>Total Orders</th><th>Est. Revenue</th></tr>";
+                    foreach ($results as $row) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row['restaurant_name']) . "</td>
+                                <td>" . htmlspecialchars($row['total_orders']) . "</td>
+                                <td>$" . number_format($row['total_revenue'], 2) . "</td>
+                              </tr>";
+                    }
+                    echo "</table>";
+                } else { echo "<p>No restaurant activity found for the current year.</p>"; }
+                break;
+
+            // --- REPORT 2: CUSTOMER PURCHASE HISTORY ---
+            case 'customer_purchase':
+                if (!$username) { echo "<p>Error: Username is required.</p>"; break; }
+                echo "<h2>Purchase History for: " . htmlspecialchars($username) . "</h2>";
+                
+                $sql = "SELECT o.created_at, p.title, o.quantity, o.status, (p.price * o.quantity) as total_cost
+                        FROM users u
+                        JOIN orders o ON u.id = o.buyer_id
+                        JOIN plates p ON o.plate_id = p.id
+                        WHERE u.username = ? AND YEAR(o.created_at) = YEAR(CURDATE())
+                        ORDER BY o.created_at DESC";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$username]);
+                $results = $stmt->fetchAll();
+
+                if ($results) {
+                    echo "<table><tr><th>Date</th><th>Plate</th><th>Quantity</th><th>Status</th><th>Total Cost</th></tr>";
+                    foreach ($results as $row) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row['created_at']) . "</td>
+                                <td>" . htmlspecialchars($row['title']) . "</td>
+                                <td>" . htmlspecialchars($row['quantity']) . "</td>
+                                <td>" . htmlspecialchars($row['status']) . "</td>
+                                <td>$" . number_format($row['total_cost'], 2) . "</td>
+                              </tr>";
+                    }
+                    echo "</table>";
+                } else { echo "<p>No purchases found for user <strong>$username</strong> this year.</p>"; }
+                break;
+
+            // --- REPORT 3: FREE PLATES RECEIVED (NEEDY) ---
+            case 'needy_plates':
+                if (!$username) { echo "<p>Error: Username is required.</p>"; break; }
+                echo "<h2>Free Plates Received by: " . htmlspecialchars($username) . "</h2>";
+
+                $sql = "SELECT d.donated_at, p.title, d.quantity
+                        FROM users u
+                        JOIN donations d ON u.id = d.needy_id
+                        JOIN plates p ON d.plate_id = p.id
+                        WHERE u.username = ? AND YEAR(d.donated_at) = YEAR(CURDATE())
+                        ORDER BY d.donated_at DESC";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$username]);
+                $results = $stmt->fetchAll();
+
+                if ($results) {
+                    echo "<table><tr><th>Date Received</th><th>Plate Name</th><th>Quantity</th></tr>";
+                    foreach ($results as $row) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row['donated_at']) . "</td>
+                                <td>" . htmlspecialchars($row['title']) . "</td>
+                                <td>" . htmlspecialchars($row['quantity']) . "</td>
+                              </tr>";
+                    }
+                    echo "</table>";
+                } else { echo "<p>No free plates found for user <strong>$username</strong> this year.</p>"; }
+                break;
+
+            // --- REPORT 4: YEAR-END TAX DECLARATION (DONOR) ---
+            case 'donor_tax':
+                echo "<h2>Year-End Tax Report (Donors)</h2>";
+                echo "<p>The following users have made donations this year eligible for tax reporting.</p>";
+
+                // Includes Strict Mode Fix
+                $sql = "SELECT u.username, prof.full_name, SUM(p.price * d.quantity) as total_donation_value
+                        FROM users u
+                        JOIN donations d ON u.id = d.donor_id
+                        JOIN plates p ON d.plate_id = p.id
+                        LEFT JOIN profiles prof ON u.id = prof.user_id
+                        WHERE YEAR(d.donated_at) = YEAR(CURDATE())
+                        GROUP BY u.id, u.username, prof.full_name";
+
+                $stmt = $pdo->query($sql);
+                $results = $stmt->fetchAll();
+
+                if ($results) {
+                    echo "<table><tr><th>Username</th><th>Donor Name</th><th>Total Tax-Deductible Value</th></tr>";
+                    foreach ($results as $row) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row['username']) . "</td>
+                                <td>" . htmlspecialchars($row['full_name'] ?? 'N/A') . "</td>
+                                <td>$" . number_format($row['total_donation_value'], 2) . "</td>
+                              </tr>";
+                    }
+                    echo "</table>";
+                } else { echo "<p>No donations found for this year.</p>"; }
+                break;
+        }
+    } catch (PDOException $e) {
+        echo "<div style='color: #ff6b6b; background: #521414; padding: 10px; border: 1px solid red;'>Database Error: " . htmlspecialchars($e->getMessage()) . "</div>";
+    }
+}
+echo '</div>';
+?>
