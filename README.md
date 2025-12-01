@@ -1,14 +1,20 @@
 # Waste-Not-Kitchen
-A web app that connects restaurants with surplus food to customers, donors, and those in need. Built with PHP, MySQL, and JavaScript, it enables restaurants to list plates, users to reserve or donate meals, and admins to manage reports through a simple, role-based platform.
+A small web app that connects restaurants with surplus food to customers, donors, and those in need. Built with PHP, MySQL (MAMP), and vanilla JavaScript, it lets restaurants list plates, users reserve or donate meals, and admins view reports via a role-based interface.
 
-## Database (MAMP) — simple workflow
+**Tech:** PHP 7+/8+, MySQL (MAMP), JavaScript, CSS
 
-Keep all your schema changes in `database/schema.sql`. It already contains:
+**Quick start (MAMP)**
+**Prerequisites:**
+- **MAMP**: Start Apache & MySQL from the MAMP app.
+- **PHP**: Use the PHP bundled with MAMP or your system PHP compatible with the app.
 
-- `CREATE DATABASE IF NOT EXISTS waste_not_kitchen ...`
-- `USE waste_not_kitchen;`
+**1) Put project in MAMP web root**
+- Copy the project folder to MAMP's `htdocs`, e.g. ` /Applications/MAMP/htdocs/Waste-Not-Kitchen` (this repo already lives there).
 
-Start MySQL in the MAMP app, then apply the file from the project root:
+**2) Create the database**
+Keep schema changes in `database/schema.sql`. It already contains the `CREATE DATABASE` and `USE` statements.
+
+Run one of these depending on your MAMP configuration.
 
 Preferred (UNIX socket):
 
@@ -27,36 +33,61 @@ Fallback (host/port):
 	< database/schema.sql
 ```
 
-If your MAMP ships MySQL 5.7, replace `mysql80` with `mysql57` in the path.
+If your MAMP uses MySQL 5.7 change `mysql80` to `mysql57` in the path.
 
-Commit your schema changes to Git:
+Commit your schema changes to Git when you update `database/schema.sql`:
 
 ```zsh
 git add database/schema.sql
 git commit -m "chore(db): update schema"
-git push origin main (or your branch)
+git push origin <your-branch>
 ```
 
-Optional: avoid typing the password each time without exposing it in commands by using a secure login-path:
+**3) (Optional) Install seed data**
+
+To load sample data from `database/seed.sql` (recommended for development):
 
 ```zsh
-# One-time setup (stores creds securely in your keychain/login-path)
+/Applications/MAMP/Library/bin/mysql80/bin/mysql --login-path=mamp < database/seed.sql
+```
+
+If you don't want to type a password each time, set a secure login path (one-time):
+
+```zsh
+# store credentials (one-time)
 /Applications/MAMP/Library/bin/mysql80/bin/mysql_config_editor set \
 	--login-path=mamp \
 	--socket=/Applications/MAMP/tmp/mysql/mysql.sock \
 	--user=root --password
-# (enter your password when prompted)
-
-# Then run without -p/-proot
-/Applications/MAMP/Library/bin/mysql80/bin/mysql --login-path=mamp \
-	< database/schema.sql
-
-# If inside database folder already, just run
-/Applications/MAMP/Library/bin/mysql80/bin/mysql --login-path=mamp < schema.sql
+# then run without -p
+/Applications/MAMP/Library/bin/mysql80/bin/mysql --login-path=mamp < database/schema.sql
 ```
 
-seed.sql is a script that fills database with initial sample data. To run (assuming you already set up a one time password and you are inside the database folder)
-```zsh
-/Applications/MAMP/Library/bin/mysql80/bin/mysql --login-path=mamp < seed.sql
-```
-Secrets note: `.env` is git-ignored in this repo; keep credentials there or in your local login-path, not in documentation or committed files.
+**4) Configure app secrets**
+- The project expects a local `.env` for secrets (this file is gitignored). Add DB creds there or rely on your MAMP login-path. See `config/config.php` for how DB is loaded.
+
+**5) Open the app**
+- In a browser, open the MAMP Apache URL. Common defaults:
+	- `http://localhost:8888/Waste-Not-Kitchen/` (if Apache uses port 8888)
+	- `http://localhost/Waste-Not-Kitchen/` (if default HTTP port)
+
+**Files & useful paths**
+- `index.php`: public landing / entry
+- `admin-dashboard.php`, `landing-page.php`, `logout.php`: top-level pages
+- `config/config.php`: app configuration
+- `database/schema.sql` and `database/seed.sql`: DB schema and seed data
+- `modules/`, `customer/`, `donor/`, `needy/`: role-based modules and controllers
+- `assets/`: CSS, fonts, images; `js/`: client scripts
+
+**Developer notes**
+- Branch: you're currently working on branch `anna`.
+- No automated tests are included. Use the browser + MAMP logs for verification.
+- To debug API requests, check `tmp/last_response.json` and `tmp/forgot_request_debug.txt`.
+
+**Contributing**
+- Keep DB changes in `database/schema.sql` and add migration notes in PR descriptions.
+
+**Secrets**
+- `.env` is gitignored — keep credentials local or use MAMP login path. Do not commit secrets.
+
+Questions or issues? Open an issue or contact the repo owner.
