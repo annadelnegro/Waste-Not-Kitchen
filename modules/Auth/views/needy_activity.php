@@ -27,7 +27,7 @@ $full_name = htmlspecialchars($_SESSION['full_name'] ?? '');
   <h1 class="page-title">Activity</h1>
 
   <div class="top-actions">
-    <a class="btn back" href="../Offers/views/list.php">Back to Dashboard</a>
+    <a class="btn back" href="/Waste-Not-Kitchen/modules/needy/needy-dashboard.php">Back to Dashboard</a>
     <a class="btn" href="profile.php">Back to Profile</a>
   </div>
 

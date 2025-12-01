@@ -60,7 +60,9 @@ $phone = $_SESSION['phone'] ?? '';
           $backUrl = '/Waste-Not-Kitchen/index.php';
       }
     ?>
-    <a class="btn" href="<?php echo $backUrl; ?>">Back to Dashboard</a>
+    <?php if (strtolower($role) !== 'restaurant'): ?>
+      <a class="btn" href="<?php echo $backUrl; ?>">Back to Dashboard</a>
+    <?php endif; ?>
     <?php if (strtolower($role) === 'restaurant'): ?>
       <a class="btn" href="activity.php">See Activity</a>
     <?php elseif (strtolower($role) === 'customer'): ?>

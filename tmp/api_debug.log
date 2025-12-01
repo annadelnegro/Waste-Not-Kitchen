@@ -5,3 +5,5 @@
 [2025-11-30T05:50:55+00:00] {"donation_pickup":{"donation_id":23,"plate_id":24,"donation_qty":2,"remaining":18}}
 [2025-11-30T05:54:09+00:00] {"return_donation":{"donation_id":16,"plate_id":21,"added_back":1,"remaining":13}}
 [2025-11-30T05:57:00+00:00] {"donation_pickup":{"donation_id":21,"plate_id":11,"donation_qty":1,"remaining":3}}
+[2025-12-01T14:47:51+00:00] {"order_pickup":{"order_id":65,"plate_id":32,"order_qty":3,"plate_qty_before":5}}
+[2025-12-01T15:38:37+00:00] {"order_pickup":{"order_id":67,"plate_id":33,"order_qty":7,"plate_qty_before":0}}

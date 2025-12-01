@@ -31,7 +31,7 @@ if ($plate_id <= 0 || $qty <= 0) {
 
 // Look up the plate to ensure it exists and get available quantity + title
 $stmt = $pdo->prepare("
-    SELECT id, title, quantity
+    SELECT id, title, quantity, available_from, available_until
     FROM plates
     WHERE id = :id
     LIMIT 1
@@ -48,6 +48,19 @@ if (!$plate) {
 $available = (int)$plate['quantity'];
 if ($available <= 0) {
     $_SESSION['flash_message'] = 'This plate is no longer available to fund.';
+    header('Location: donor-dashboard.php');
+    exit;
+}
+
+// Enforce plate availability window
+$now = date('Y-m-d H:i:s');
+if (!empty($plate['available_from']) && strtotime($plate['available_from']) > strtotime($now)) {
+    $_SESSION['flash_message'] = 'This plate is not available yet.';
+    header('Location: donor-dashboard.php');
+    exit;
+}
+if (!empty($plate['available_until']) && strtotime($plate['available_until']) < strtotime($now)) {
+    $_SESSION['flash_message'] = 'This plate is no longer available.';
     header('Location: donor-dashboard.php');
     exit;
 }

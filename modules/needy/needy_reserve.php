@@ -46,6 +46,24 @@ if ($remainingAllowed <= 0) {
 // Clamp requested qty to remaining allowed
 $qty = min($qty, $remainingAllowed);
 
+// Ensure the plate's availability window allows reservations now
+$meta = $pdo->prepare("SELECT available_from, available_until FROM plates WHERE id = :id LIMIT 1");
+$meta->execute([':id' => $plate_id]);
+$metaRow = $meta->fetch();
+$now = date('Y-m-d H:i:s');
+if ($metaRow) {
+    if (!empty($metaRow['available_from']) && strtotime($metaRow['available_from']) > strtotime($now)) {
+        $_SESSION['flash_message'] = 'This plate is not available yet.';
+        header('Location: needy-dashboard.php');
+        exit;
+    }
+    if (!empty($metaRow['available_until']) && strtotime($metaRow['available_until']) < strtotime($now)) {
+        $_SESSION['flash_message'] = 'This plate is no longer available.';
+        header('Location: needy-dashboard.php');
+        exit;
+    }
+}
+
 // Get available donated quantity for this plate
 $stmt = $pdo->prepare("
     SELECT id, donor_id, plate_id, quantity

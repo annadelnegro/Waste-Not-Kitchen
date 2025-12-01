@@ -31,7 +31,7 @@ if ($plate_id <= 0 || $qty <= 0) {
 
 // Look up the plate
 $stmt = $pdo->prepare("
-    SELECT id, title, quantity
+    SELECT id, title, quantity, available_from, available_until
     FROM plates
     WHERE id = :id
     LIMIT 1
@@ -55,6 +55,19 @@ if ($available <= 0) {
 // Clamp quantity to available
 if ($qty > $available) {
     $qty = $available;
+}
+
+// Enforce plate availability window
+$now = date('Y-m-d H:i:s');
+if (!empty($plate['available_from']) && strtotime($plate['available_from']) > strtotime($now)) {
+    $_SESSION['flash_message'] = 'This plate is not available yet.';
+    header('Location: customer-dashboard.php');
+    exit;
+}
+if (!empty($plate['available_until']) && strtotime($plate['available_until']) < strtotime($now)) {
+    $_SESSION['flash_message'] = 'This plate is no longer available.';
+    header('Location: customer-dashboard.php');
+    exit;
 }
 
 // Check if there is already a reserved order for this user + plate

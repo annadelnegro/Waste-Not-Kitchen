@@ -1,1 +1,0 @@
-<!-- Detail template for a single recipe. -->

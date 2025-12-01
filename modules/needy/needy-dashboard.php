@@ -32,17 +32,21 @@ $currentReserved = (int)$reservedRow['total_reserved'];
 $remainingAllowed = max(0, 2 - $currentReserved);
 
 // Get all donated plates that are not yet reserved by any needy
-// Aggregate quantity by plate
+// Aggregate quantity by plate and respect plate availability window
 $sql = "
     SELECT
         d.plate_id,
         SUM(d.quantity) AS available_qty,
         p.title,
-        p.description
+        p.description,
+        p.available_from,
+        p.available_until
     FROM donations d
     JOIN plates p ON d.plate_id = p.id
     WHERE d.needy_id IS NULL
-    GROUP BY d.plate_id, p.title, p.description
+      AND (p.available_from IS NULL OR p.available_from <= NOW())
+      AND (p.available_until IS NULL OR p.available_until >= NOW())
+    GROUP BY d.plate_id, p.title, p.description, p.available_from, p.available_until
     HAVING SUM(d.quantity) > 0
 ";
 $stmt = $pdo->query($sql);
@@ -99,6 +103,10 @@ $availablePlates = $stmt->fetchAll();
                                     <?= $availableQty ?> available
                                 </div>
                             </div>
+
+						<?php if (!empty($plate['available_until'])): ?>
+							<div style="color:red;font-size:0.9rem;margin-top:6px;margin-bottom:6px;">Available until <?= htmlspecialchars(date('m/d/y', strtotime($plate['available_until']))) ?></div>
+						<?php endif; ?>
 
                             <div class="action-row">
                                 <?php if ($maxSelectable <= 0): ?>

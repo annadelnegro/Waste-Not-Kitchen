@@ -12,8 +12,12 @@ if (isset($_SESSION['flash_message'])) {
     unset($_SESSION['flash_message']);
 }
 
-// Get all plates that are still available
-$sql = "SELECT id, title, description, price, quantity FROM plates WHERE quantity > 0";
+// Get all plates that are still available (respect plate availability window)
+$sql = "SELECT id, title, description, price, quantity, available_from, available_until
+				FROM plates
+				WHERE quantity > 0
+					AND (available_from IS NULL OR available_from <= NOW())
+					AND (available_until IS NULL OR available_until >= NOW())";
 $stmt = $pdo->query($sql);
 $plates = $stmt->fetchAll();
 ?>
@@ -68,6 +72,10 @@ $plates = $stmt->fetchAll();
 									<?= (int)$plate['quantity'] ?> available
 								</div>
 							</div>
+
+							<?php if (!empty($plate['available_until'])): ?>
+								<div style="color:red;font-size:0.9rem;margin-top:6px;margin-bottom:6px;">Available until <?= htmlspecialchars(date('m/d/y', strtotime($plate['available_until']))) ?></div>
+							<?php endif; ?>
 
 							<!-- Donate -->
 							<div class="action-row">

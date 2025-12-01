@@ -1,1 +1,0 @@
-<!-- Controller for the Recipes module. Handles requests like /recipes and prepares data for views. -->
