@@ -1,5 +1,21 @@
 <?php
 // Waste-Not-Kitchen Donor Dashboard
+session_start();
+
+// PDO connection
+require_once __DIR__ . '/../../config/config.php';
+
+// Clear flash message
+$flash = null;
+if (isset($_SESSION['flash_message'])) {
+    $flash = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+
+// Get all plates that are still available
+$sql = "SELECT id, title, description, price, quantity FROM plates WHERE quantity > 0";
+$stmt = $pdo->query($sql);
+$plates = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,97 +31,62 @@
 	<body>
 		<div class="page">
 			<a href="donor-cart.php" class="cart-button">Cart</a>
-
 			<a href="../.." class="back-button">Back</a>
+
+			<?php if ($flash): ?>
+				<div class="flash-message">
+					<?= htmlspecialchars($flash) ?>
+				</div>
+			<?php endif; ?>
 
 			<h1 class="dashboard-title">Donor Dashboard</h1>
 
 			<h2 class="plates-avail">Plates Available</h2>
 
 			<section class="card-grid">
-				<!-- Card 1 -->
-				<article class="plate-card">
-					<div class="plate-title">Dish A</div>
-					<div class="description-box">Description</div>
-					<div class="meta-row">
-					<div class="pill">$20</div>
-					<div class="pill">2 available</div>
-					</div>
-					<div class="action-row">
-					<input class="qty-input" type="number" min="1" value="1">
-					<button class="add-btn">Reserve</button>
-					</div>
-				</article>
+				<?php if (empty($plates)): ?>
+					<p>No plates available to buy right now.</p>
+				<?php else: ?>
+					<?php foreach ($plates as $plate): ?>
+						<article class="plate-card">
+							<!-- Title -->
+							<div class="plate-title">
+								<?= htmlspecialchars($plate['title']) ?>
+							</div>
 
-				<!-- Card 2 -->
-				<article class="plate-card">
-					<div class="plate-title">Dish B</div>
-					<div class="description-box">Description</div>
-					<div class="meta-row">
-					<div class="pill">$20</div>
-					<div class="pill">2 available</div>
-					</div>
-					<div class="action-row">
-					<input class="qty-input" type="number" min="1" value="1">
-					<button class="add-btn">Reserve</button>
-					</div>
-				</article>
+							<!-- Description -->
+							<div class="description-box">
+								<?= htmlspecialchars($plate['description']) ?>
+							</div>
 
-				<!-- Card 3 -->
-				<article class="plate-card">
-					<div class="plate-title">Dish C</div>
-					<div class="description-box">Description</div>
-					<div class="meta-row">
-					<div class="pill">$20</div>
-					<div class="pill">2 available</div>
-					</div>
-					<div class="action-row">
-					<input class="qty-input" type="number" min="1" value="1">
-					<button class="add-btn">Reserve</button>
-					</div>
-				</article>
+							<!-- Price and quantity -->
+							<div class="meta-row">
+								<div class="pill">
+									$<?= number_format($plate['price'], 2) ?>
+								</div>
+								<div class="pill">
+									<?= (int)$plate['quantity'] ?> available
+								</div>
+							</div>
 
-				<!-- Card 4 -->
-				<article class="plate-card">
-					<div class="plate-title">Dish D</div>
-					<div class="description-box">Description</div>
-					<div class="meta-row">
-					<div class="pill">$20</div>
-					<div class="pill">3 available</div>
-					</div>
-					<div class="action-row">
-					<input class="qty-input" type="number" min="1" value="1">
-					<button class="add-btn">Reserve</button>
-					</div>
-				</article>
-
-				<!-- Card 5 -->
-				<article class="plate-card">
-					<div class="plate-title">Dish E</div>
-					<div class="description-box">Description</div>
-					<div class="meta-row">
-					<div class="pill">$20</div>
-					<div class="pill">1 available</div>
-					</div>
-					<div class="action-row">
-					<input class="qty-input" type="number" min="1" value="1">
-					<button class="add-btn">Reserve</button>
-					</div>
-				</article>
-
-				<!-- Card 6 -->
-				<article class="plate-card">
-					<div class="plate-title">Dish F</div>
-					<div class="description-box">Description</div>
-					<div class="meta-row">
-					<div class="pill">$20</div>
-					<div class="pill">2 available</div>
-					</div>
-					<div class="action-row">
-					<input class="qty-input" type="number" min="1" value="1">
-					<button class="add-btn">Reserve</button>
-					</div>
-				</article>
+							<!-- Donate -->
+							<div class="action-row">
+								<form method="post" action="donor_reserve.php" class="action-row">
+									<input type="hidden" name="plate_id" value="<?= (int)$plate['id'] ?>">
+									<input
+										class="qty-input"
+										type="number"
+										name="qty"
+										min="1"
+										max="<?= (int)$plate['quantity'] ?>"
+										value="1"
+									>
+									<button type="submit" class="add-btn">Add to Cart</button>
+								</form>
+							</div>
+						</article>
+					<?php endforeach; ?>
+				<?php endif; ?>
 			</section>
 		</div>
 	</body>

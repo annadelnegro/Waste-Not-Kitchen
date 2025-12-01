@@ -5,7 +5,7 @@ $host = 'localhost';
 $db   = 'waste_not_kitchen';
 $user = 'root';
 $pass = 'root';
-$port = 8889;
+$port = 3306;
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
 
 try {
