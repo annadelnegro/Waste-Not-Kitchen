@@ -371,3 +371,45 @@ Array
 )
 
 ---
+2025-11-30T21:10:03+00:00
+
+Array
+(
+    [username] => annas_restaurant
+)
+
+---
+2025-11-30T21:10:43+00:00
+
+Array
+(
+    [username] => dd
+)
+
+---
+2025-11-30T21:10:49+00:00
+
+Array
+(
+    [username] => annas_restaurant
+)
+
+---
+2025-11-30T21:10:51+00:00
+
+Array
+(
+    [username] => annas_restaurant
+    [security_answer] => ee
+)
+
+---
+2025-11-30T21:10:55+00:00
+
+Array
+(
+    [username] => annas_restaurant
+    [security_answer] => Lola
+)
+
+---

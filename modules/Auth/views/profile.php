@@ -38,7 +38,29 @@ $phone = $_SESSION['phone'] ?? '';
   <div class="profile-header">Profile</div>
 
   <div class="profile-actions">
-    <a class="btn" href="../Offers/views/list.php">Back to Dashboard</a>
+    <?php
+      // Compute an absolute dashboard URL based on role so the "Back" button
+      // always goes to the correct dashboard regardless of current path.
+      $roleLower = strtolower($role ?? '');
+      switch ($roleLower) {
+        case 'customer':
+          $backUrl = '/Waste-Not-Kitchen/modules/customer/customer-dashboard.php';
+          break;
+        case 'donor':
+          $backUrl = '/Waste-Not-Kitchen/modules/donor/donor-dashboard.php';
+          break;
+        case 'needy':
+          $backUrl = '/Waste-Not-Kitchen/modules/needy/needy-dashboard.php';
+          break;
+        case 'restaurant':
+          // restaurants use the Offers list as their dashboard
+          $backUrl = '/Waste-Not-Kitchen/modules/Offers/views/list.php';
+          break;
+        default:
+          $backUrl = '/Waste-Not-Kitchen/index.php';
+      }
+    ?>
+    <a class="btn" href="<?php echo $backUrl; ?>">Back to Dashboard</a>
     <?php if (strtolower($role) === 'restaurant'): ?>
       <a class="btn" href="activity.php">See Activity</a>
     <?php elseif (strtolower($role) === 'customer'): ?>
