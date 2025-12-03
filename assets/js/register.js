@@ -42,31 +42,66 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         let valid = true;
 
+        const fullName = form.full_name;
         const username = form.username;
         const password = form.password;
         const confirmPassword = form.confirm_password;
+        const roleField = form.role;
+        const address = form.address;
+        const securityQuestion = form.security_question;
+        const securityAnswer = form.security_answer;
         const phone = form.phone;
+        const cardholder = form.cardholder_name;
         const cardNumber = form.card_number;
         const cvc = form.cvc;
         const exp = form.expiration_date;
 
+        // --- Required fields check ---
+        const requiredFields = [
+            {el: fullName, msg: "Full name is required"},
+            {el: username, msg: "Username is required"},
+            {el: password, msg: "Password is required"},
+            {el: confirmPassword, msg: "Confirm password is required"},
+            {el: roleField, msg: "Please select a role"},
+            {el: address, msg: "Address is required"},
+            {el: securityQuestion, msg: "Please select a security question"},
+            {el: securityAnswer, msg: "Security answer is required"},
+        ];
+
+        requiredFields.forEach(({el, msg}) => {
+            if (!el) return;
+            const val = (el.value || "").toString().trim();
+            if (val === "") {
+                showError(el, msg);
+                valid = false;
+            } else {
+                clearError(el);
+            }
+        });
+
         // --- Username check ---
-        if (!usernamePattern.test(username.value)) {
-            showError(username, "Username does not meet requirements");
-            valid = false;
-        } else clearError(username);
+        if (username.value && username.value.toString().trim() !== "") {
+            if (!usernamePattern.test(username.value)) {
+                showError(username, "Username does not meet requirements");
+                valid = false;
+            } else clearError(username);
+        }
 
         // --- Password check ---
-        if (!passwordPattern.test(password.value)) {
-            showError(password, "Password does not meet requirements");
-            valid = false;
-        } else clearError(password);
+        if (password.value && password.value.toString().trim() !== "") {
+            if (!passwordPattern.test(password.value)) {
+                showError(password, "Password does not meet requirements");
+                valid = false;
+            } else clearError(password);
+        }
 
         // --- Confirm password check ---
-        if (password.value !== confirmPassword.value) {
-            showError(confirmPassword, "Passwords do not match");
-            valid = false;
-        } else clearError(confirmPassword);
+        if ((password.value && password.value.toString().trim() !== "") || (confirmPassword.value && confirmPassword.value.toString().trim() !== "")) {
+            if (password.value !== confirmPassword.value) {
+                showError(confirmPassword, "Passwords do not match");
+                valid = false;
+            } else clearError(confirmPassword);
+        }
 
         // --- Phone check ---
         if (phone.value && !phonePattern.test(phone.value)) {
@@ -76,6 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // --- Payment section validation ---
         if (!paymentSection.classList.contains("hidden")) {
+            if (cardholder && (!cardholder.value || cardholder.value.toString().trim() === "")) {
+                showError(cardholder, "Cardholder name is required");
+                valid = false;
+            } else if (cardholder) {
+                clearError(cardholder);
+            }
+
             if (!cardPattern.test(cardNumber.value)) {
                 showError(cardNumber, "Card number must be 13–19 digits");
                 valid = false;

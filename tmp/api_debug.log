@@ -7,3 +7,6 @@
 [2025-11-30T05:57:00+00:00] {"donation_pickup":{"donation_id":21,"plate_id":11,"donation_qty":1,"remaining":3}}
 [2025-12-01T14:47:51+00:00] {"order_pickup":{"order_id":65,"plate_id":32,"order_qty":3,"plate_qty_before":5}}
 [2025-12-01T15:38:37+00:00] {"order_pickup":{"order_id":67,"plate_id":33,"order_qty":7,"plate_qty_before":0}}
+[2025-12-03T17:56:28+00:00] {"update_profile_called":{"session_user_id":51,"session_username":"annas_rest","body":{"field":"phone","value":"111-222-1122"}}}
+[2025-12-03T17:59:00+00:00] {"return_donation":{"donation_id":19,"plate_id":13,"added_back":2,"remaining":27}}
+[2025-12-03T17:59:27+00:00] {"donation_pickup":{"donation_id":10,"plate_id":9,"donation_qty":1,"remaining":6}}
